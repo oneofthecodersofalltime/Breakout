@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" uid="uid://cg0spwq3ox366" path="res://Scenes/player.tscn" id="1_0b752"]
+[ext_resource type="PackedScene" uid="uid://be1sh5osw6n6n" path="res://Scenes/ball.tscn" id="2_q8tjx"]
+[ext_resource type="PackedScene" uid="uid://dj0mc7ipl6tsq" path="res://Scenes/block.tscn" id="3_4fs81"]
+[ext_resource type="PackedScene" uid="uid://kuy6prtb4mgp" path="res://Scenes/wall.tscn" id="4_5p4gt"]
+[ext_resource type="Script" path="res://Scripts/Death.gd" id="5_qj3va"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rn73k"]
+size = Vector2(1262, 57)
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Player" parent="Player" instance=ExtResource("1_0b752")]
+position = Vector2(582, 555)
+
+[node name="Ball" parent="Player" instance=ExtResource("2_q8tjx")]
+position = Vector2(564, 333)
+
+[node name="Blocks" type="Node" parent="."]
+
+[node name="Block" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(113, 75)
+
+[node name="Block2" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(309, 73)
+
+[node name="Block3" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(494, 73)
+
+[node name="Block4" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(680, 72)
+
+[node name="Area2D" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(856, 73)
+
+[node name="Area2D2" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(1034, 74)
+
+[node name="Area2D3" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(112, 160)
+
+[node name="Area2D4" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(307, 156)
+
+[node name="Area2D5" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(493, 155)
+
+[node name="Area2D6" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(681, 156)
+
+[node name="Area2D7" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(858, 157)
+
+[node name="Area2D8" parent="Blocks" instance=ExtResource("3_4fs81")]
+position = Vector2(1033, 157)
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall" parent="Walls" instance=ExtResource("4_5p4gt")]
+position = Vector2(1157, 3)
+
+[node name="Wall2" parent="Walls" instance=ExtResource("4_5p4gt")]
+position = Vector2(4, -650)
+
+[node name="Wall3" parent="Walls" instance=ExtResource("4_5p4gt")]
+position = Vector2(-1161, 11)
+
+[node name="Death" type="Area2D" parent="Walls"]
+script = ExtResource("5_qj3va")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Death"]
+position = Vector2(592, 709)
+shape = SubResource("RectangleShape2D_rn73k")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Label" parent="HUD"]
+offset_left = 12.0
+offset_top = 19.0
+offset_right = 73.0
+offset_bottom = 45.0
+text = "Score: 0"
+
+[node name="Lives" type="Label" parent="HUD"]
+offset_left = 12.0
+offset_top = 41.0
+offset_right = 69.0
+offset_bottom = 67.0
+text = "Lives: 3"
+
+[connection signal="collision" from="Player/Player" to="Player/Ball" method="_on_player_collision"]
+[connection signal="area_entered" from="Walls/Death" to="Walls/Death" method="_on_area_entered"]
